@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Compras</title>
+    <title>Lista de compras de Helder e Diana</title>
+
+    <!-- Favicon SVG em Data URI (Carrinho de compras verde e elegante) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310b981'/><path d='M25 30h10l8 32h32l8-22H36' stroke='%23ffffff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='45' cy='72' r='5' fill='%23ffffff'/><circle cx='71' cy='72' r='5' fill='%23ffffff'/><path d='M60 40l6 6 12-12' stroke='%2334d399' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+    
+    <!-- Apple Touch Icon (para iOS / Ecrã Principal) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2310b981'/><path d='M25 30h10l8 32h32l8-22H36' stroke='%23ffffff' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='45' cy='72' r='5' fill='%23ffffff'/><circle cx='71' cy='72' r='5' fill='%23ffffff'/><path d='M60 40l6 6 12-12' stroke='%2334d399' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -48,8 +55,13 @@
         <header class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-6 transition-all">
             <div class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="p-2.5 bg-emerald-100 text-emerald-600 rounded-xl">
-                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    <div class="p-2.5 bg-emerald-100 text-emerald-600 rounded-xl shadow-xs flex items-center justify-center">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="21" r="1"></circle>
+                            <circle cx="19" cy="21" r="1"></circle>
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                            <path d="m16 10 2 2 4-4" stroke="#10b981" stroke-width="2.5"></path>
+                        </svg>
                     </div>
                     <div>
                         <h1 class="text-xl font-bold text-slate-900 tracking-tight">Lista de compras de Helder e Diana</h1>
