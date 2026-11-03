@@ -28,7 +28,7 @@
         <!-- Header -->
         <header class="bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 text-white p-4 sm:p-6 shadow-md shrink-0">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base border border-white/20 shrink-0">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white/25 backdrop-blur-md rounded-xl flex items-center justify-center text-white font-bold text-sm sm:text-base border border-white/20 shrink-0">
                     H&D
                 </div>
                 <div class="min-w-0 flex-1">
@@ -51,18 +51,18 @@
 
         <!-- Formulário Adicionar Item -->
         <section class="p-3 sm:p-4 bg-slate-50 border-b border-slate-100 shrink-0">
-            <form id="add-item-form" class="flex gap-2 items-center">
-                <input type="text" id="item-input" placeholder="Adicionar item..." required 
-                    class="flex-1 min-w-0 px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs font-medium">
+            <div class="flex gap-2 items-center">
+                <input type="text" id="item-input" placeholder="Adicionar item..." 
+                    class="flex-1 min-w-0 px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs font-medium text-slate-800">
                 
                 <input type="text" id="qty-input" placeholder="Qtd." 
-                    class="w-16 sm:w-20 px-2 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs text-center font-medium shrink-0">
+                    class="w-16 sm:w-20 px-2 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs text-center font-medium shrink-0 text-slate-800">
                 
-                <button type="submit" 
-                    class="w-10 h-10 sm:w-11 sm:h-11 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-xl shadow-xs transition flex items-center justify-center shrink-0">
+                <button type="button" id="add-btn" 
+                    class="w-10 h-10 sm:w-11 sm:h-11 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-xl shadow-xs transition flex items-center justify-center shrink-0 cursor-pointer">
                     <i class="fa-solid fa-plus text-sm"></i>
                 </button>
-            </form>
+            </div>
         </section>
 
         <!-- Barra de Filtros -->
@@ -73,7 +73,7 @@
                 <button type="button" id="filter-completed" class="filter-btn px-2.5 py-1 rounded-lg font-medium text-slate-500">Feito</button>
             </div>
             
-            <button type="button" id="clear-completed-btn" class="text-rose-500 hover:text-rose-700 font-semibold px-2 py-1 rounded-lg hover:bg-rose-50 transition flex items-center gap-1">
+            <button type="button" id="clear-completed-btn" class="text-rose-500 hover:text-rose-700 font-semibold px-2 py-1 rounded-lg hover:bg-rose-50 transition flex items-center gap-1 cursor-pointer">
                 <i class="fa-regular fa-trash-can text-xs"></i> Limpar
             </button>
         </section>
@@ -86,4 +86,216 @@
 
             <!-- Estado Vazio -->
             <div id="empty-state" class="hidden flex-col items-center justify-center py-12 text-center text-slate-400">
-                <div class="w-12 h-12 bg-indigo-50
+                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-2 text-indigo-400">
+                    <i class="fa-solid fa-basket-shopping text-xl"></i>
+                </div>
+                <p class="text-xs font-semibold text-slate-600">A lista está vazia</p>
+            </div>
+        </main>
+        
+        <!-- Rodapé -->
+        <footer class="p-2.5 sm:p-3 bg-white border-t border-slate-100 text-center text-[11px] text-slate-400 shrink-0 flex items-center justify-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>Lista de compras • Helder e Diana</span>
+        </footer>
+    </div>
+
+    <!-- Script JavaScript Robusto -->
+    <script>
+        (function() {
+            let items = [];
+            let currentFilter = 'all';
+            const STORAGE_KEY = 'helder_diana_shopping_app_v2';
+
+            const itemInput = document.getElementById('item-input');
+            const qtyInput = document.getElementById('qty-input');
+            const addBtn = document.getElementById('add-btn');
+            const listEl = document.getElementById('shopping-list');
+            const emptyEl = document.getElementById('empty-state');
+
+            // Carregar dados guardados
+            function loadData() {
+                try {
+                    const stored = localStorage.getItem(STORAGE_KEY);
+                    if (stored) {
+                        items = JSON.parse(stored);
+                    } else {
+                        items = [
+                            { id: '1', name: 'Leite meio-gordo', qty: '2L', completed: false },
+                            { id: '2', name: 'Café em grão', qty: '1 emb', completed: true }
+                        ];
+                        saveData();
+                    }
+                } catch (e) {
+                    items = [];
+                }
+                renderList();
+            }
+
+            // Guardar no dispositivo
+            function saveData() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+                } catch (e) {}
+            }
+
+            // Adicionar Item
+            function addItem() {
+                const name = itemInput.value.trim();
+                const qty = qtyInput.value.trim();
+
+                if (!name) {
+                    itemInput.focus();
+                    return;
+                }
+
+                const newItem = {
+                    id: Date.now().toString() + Math.random().toString(36.substring(2, 5)),
+                    name: name,
+                    qty: qty,
+                    completed: false
+                };
+
+                items.unshift(newItem);
+                saveData();
+                renderList();
+
+                itemInput.value = '';
+                qtyInput.value = '';
+                itemInput.focus();
+            }
+
+            // Renderizar a Lista
+            function renderList() {
+                listEl.innerHTML = '';
+
+                const filtered = items.filter(item => {
+                    if (currentFilter === 'pending') return !item.completed;
+                    if (currentFilter === 'completed') return item.completed;
+                    return true;
+                });
+
+                if (filtered.length === 0) {
+                    emptyEl.classList.remove('hidden');
+                    emptyEl.classList.add('flex');
+                } else {
+                    emptyEl.classList.add('hidden');
+                    emptyEl.classList.remove('flex');
+
+                    filtered.forEach(item => {
+                        const li = document.createElement('li');
+                        li.className = `flex items-center justify-between p-3 bg-white border rounded-xl transition ${
+                            item.completed ? 'bg-slate-50 border-slate-200/60 opacity-70' : 'border-slate-200 shadow-xs'
+                        }`;
+
+                        li.innerHTML = `
+                            <div class="flex items-center space-x-3 flex-1 min-w-0 pr-2">
+                                <button type="button" data-action="toggle" data-id="${item.id}" class="flex-shrink-0 w-6 h-6 rounded-lg border transition flex items-center justify-center cursor-pointer ${
+                                    item.completed ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 bg-white'
+                                }">
+                                    ${item.completed ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                                </button>
+                                <span class="text-sm font-semibold truncate ${item.completed ? 'line-through text-slate-400 font-normal' : 'text-slate-800'}">
+                                    ${escapeHtml(item.name)}
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-2 shrink-0">
+                                ${item.qty ? `<span class="text-xs px-2 py-0.5 bg-indigo-50 text-indigo-700 rounded-md font-semibold">${escapeHtml(item.qty)}</span>` : ''}
+                                <button type="button" data-action="delete" data-id="${item.id}" class="text-slate-300 hover:text-rose-500 transition p-1 cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-sm"></i>
+                                </button>
+                            </div>
+                        `;
+                        listEl.appendChild(li);
+                    });
+                }
+
+                // Atualizar barra de progresso
+                const total = items.length;
+                const completedCount = items.filter(i => i.completed).length;
+                const percentage = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+                
+                document.getElementById('progress-stats').innerText = `${completedCount}/${total} comprados`;
+                document.getElementById('progress-percentage').innerText = `${percentage}%`;
+                document.getElementById('progress-bar').style.width = `${percentage}%`;
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.innerText = text;
+                return div.innerHTML;
+            }
+
+            // Event Listeners de Ação
+            addBtn.addEventListener('click', addItem);
+            
+            itemInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addItem();
+                }
+            });
+
+            qtyInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addItem();
+                }
+            });
+
+            // Gestão de cliques na lista (Concluir e Apagar)
+            listEl.addEventListener('click', function(e) {
+                const target = e.target.closest('button');
+                if (!target) return;
+
+                const action = target.getAttribute('data-action');
+                const id = target.getAttribute('data-id');
+
+                if (action === 'toggle') {
+                    const item = items.find(i => i.id === id);
+                    if (item) {
+                        item.completed = !item.completed;
+                        saveData();
+                        renderList();
+                    }
+                } else if (action === 'delete') {
+                    items = items.filter(i => i.id !== id);
+                    saveData();
+                    renderList();
+                }
+            });
+
+            // Filtros
+            function setFilter(filter) {
+                currentFilter = filter;
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.className = "filter-btn px-2.5 py-1 rounded-lg font-medium text-slate-500";
+                });
+                const activeBtn = document.getElementById(`filter-${filter}`);
+                if (activeBtn) {
+                    activeBtn.className = "filter-btn px-2.5 py-1 rounded-lg font-semibold text-indigo-700 bg-white shadow-xs";
+                }
+                renderList();
+            }
+
+            document.getElementById('filter-all').addEventListener('click', () => setFilter('all'));
+            document.getElementById('filter-pending').addEventListener('click', () => setFilter('pending'));
+            document.getElementById('filter-completed').addEventListener('click', () => setFilter('completed'));
+
+            // Limpar Concluídos
+            document.getElementById('clear-completed-btn').addEventListener('click', function() {
+                if (items.some(i => i.completed)) {
+                    if (confirm('Remover todos os itens comprados?')) {
+                        items = items.filter(i => !i.completed);
+                        saveData();
+                        renderList();
+                    }
+                }
+            });
+
+            // Arranque
+            loadData();
+        })();
+    </script>
+</body>
+</html>
