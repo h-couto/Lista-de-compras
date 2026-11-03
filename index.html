@@ -4,96 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de compras de Helder e Diana</title>
-    <!-- Favicon & Apple Touch Icon Minimalista -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%230f172a'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='28' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='28' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='28' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='28' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%230f172a'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='28' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='28' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='28' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='28' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
+    <!-- Favicon & Apple Touch Icon Vibrante -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%236366f1'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%236366f1'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 9999px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 </head>
-<body class="bg-white text-slate-900 min-h-screen flex flex-col items-center justify-center sm:p-6 antialiased selection:bg-slate-900 selection:text-white">
+<body class="bg-gradient-to-br from-slate-100 via-indigo-50/30 to-purple-50/40 text-slate-800 min-h-screen flex flex-col items-center justify-center p-3 sm:p-6 antialiased selection:bg-indigo-500 selection:text-white">
 
-    <div class="w-full max-w-md bg-white min-h-screen sm:min-h-[85vh] sm:rounded-3xl sm:border sm:border-slate-100 sm:shadow-2xl sm:shadow-slate-200/50 flex flex-col justify-between overflow-hidden relative">
+    <div class="w-full max-w-lg bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl shadow-indigo-100/50 border border-white overflow-hidden flex flex-col min-h-[90vh] sm:min-h-[85vh]">
         
-        <!-- Subtle Top Progress Line -->
-        <div class="w-full bg-slate-100 h-1">
-            <div id="progress-line" class="bg-slate-900 h-1 transition-all duration-500 ease-out w-0"></div>
-        </div>
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 text-white p-6 shadow-lg relative overflow-hidden">
+            <!-- Background decorative glow -->
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
 
-        <div>
-            <!-- Header -->
-            <header class="pt-8 px-6 pb-4 flex flex-col gap-1">
-                <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-medium tracking-wider uppercase text-slate-400">Lista Partilhada</span>
-                    <span id="stats-text" class="text-xs text-slate-400 font-normal">0 de 0 comprados</span>
+            <div class="flex items-center justify-between relative z-10">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-inner border border-white/20">
+                        H&D
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-indigo-100 font-semibold opacity-90">Lista Partilhada</span>
+                        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">Helder e Diana</h1>
+                    </div>
                 </div>
-                <h1 class="text-xl font-semibold tracking-tight text-slate-900">Helder e Diana</h1>
-            </header>
-
-            <!-- Minimal Form Input -->
-            <section class="px-6 py-2">
-                <form id="add-item-form" class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 rounded-2xl p-1.5 focus-within:border-slate-900 focus-within:ring-1 focus-within:ring-slate-900 transition-all duration-200">
-                    <input type="text" id="item-input" placeholder="Adicionar item..." required 
-                        class="flex-1 px-3 py-2 text-sm bg-transparent border-none focus:outline-none text-slate-900 placeholder:text-slate-400 font-normal">
-                    
-                    <input type="text" id="qty-input" placeholder="Qtd." 
-                        class="w-16 px-2 py-2 text-sm bg-transparent border-none focus:outline-none text-slate-600 placeholder:text-slate-400 text-center font-normal">
-                    
-                    <button type="submit" 
-                        class="w-9 h-9 bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-xs transition-all flex items-center justify-center active:scale-95 flex-shrink-0">
-                        <i class="fa-solid fa-plus text-xs"></i>
-                    </button>
-                </form>
-            </section>
-
-            <!-- Filters -->
-            <section class="px-6 pt-4 pb-2 flex items-center justify-between">
-                <div class="flex items-center gap-4 text-xs">
-                    <button id="filter-all" onclick="setFilter('all')" class="font-medium text-slate-900 border-b-2 border-slate-900 pb-0.5 transition">Todos</button>
-                    <button id="filter-pending" onclick="setFilter('pending')" class="font-normal text-slate-400 hover:text-slate-700 pb-0.5 transition">Pendentes</button>
-                    <button id="filter-completed" onclick="setFilter('completed')" class="font-normal text-slate-400 hover:text-slate-700 pb-0.5 transition">Comprados</button>
-                </div>
-
-                <button onclick="confirmClearCompleted()" class="text-xs text-slate-400 hover:text-rose-500 font-normal transition">
-                    Limpar
-                </button>
-            </section>
-
-            <!-- Shopping List -->
-            <main class="px-6 py-3 max-h-[50vh] overflow-y-auto custom-scrollbar">
-                <ul id="shopping-list" class="space-y-1">
-                    <!-- Data loaded dynamically -->
-                </ul>
-
-                <!-- Empty State -->
-                <div id="empty-state" class="hidden flex-col items-center justify-center py-12 text-center text-slate-400">
-                    <p class="text-xs font-normal text-slate-400">Nenhum item adicionado</p>
-                </div>
-            </main>
-        </div>
-        
-        <!-- Footer Sync Status -->
-        <footer class="p-6 border-t border-slate-50 flex items-center justify-between text-[11px] text-slate-400">
-            <div class="flex items-center gap-1.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                <span>Sincronizado</span>
             </div>
-            <span>Minimal List</span>
+
+            <!-- Progress Card Integrated -->
+            <div class="mt-6 bg-black/15 rounded-2xl p-3.5 backdrop-blur-md border border-white/10">
+                <div class="flex justify-between text-xs px-1 mb-1.5 font-medium text-indigo-50">
+                    <span id="progress-stats">0 de 0 itens comprados</span>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <div class="w-full bg-indigo-950/30 rounded-full h-2 overflow-hidden">
+                    <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-300 h-2 rounded-full transition-all duration-500 ease-out w-0 shadow-sm"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Form Component -->
+        <section class="p-4 bg-slate-50/50 border-b border-slate-100">
+            <form id="add-item-form" class="flex gap-2">
+                <input type="text" id="item-input" placeholder="O que falta comprar..." required 
+                    class="flex-1 px-4 py-3 text-sm bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition placeholder:text-slate-400 font-medium">
+                
+                <input type="text" id="qty-input" placeholder="Qtd." 
+                    class="w-20 px-3 py-3 text-sm bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm transition text-center placeholder:text-slate-400 font-medium">
+                
+                <button type="submit" 
+                    class="w-12 h-12 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl shadow-md hover:shadow-indigo-200 transition-all active:scale-95 flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-plus text-base"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- Filters Bar -->
+        <section class="px-5 py-3.5 bg-white border-b border-slate-100 flex items-center justify-between text-xs sm:text-sm">
+            <div class="flex items-center space-x-1 bg-slate-100/80 p-1 rounded-xl">
+                <button id="filter-all" onclick="setFilter('all')" class="px-3 py-1.5 rounded-lg font-semibold transition text-indigo-700 bg-white shadow-xs">Todos</button>
+                <button id="filter-pending" onclick="setFilter('pending')" class="px-3 py-1.5 rounded-lg font-medium text-slate-500 hover:text-slate-800 transition">Pendentes</button>
+                <button id="filter-completed" onclick="setFilter('completed')" class="px-3 py-1.5 rounded-lg font-medium text-slate-500 hover:text-slate-800 transition">Comprados</button>
+            </div>
+            
+            <button onclick="confirmClearCompleted()" class="text-xs text-rose-500 hover:text-rose-700 font-semibold px-2.5 py-1.5 rounded-xl hover:bg-rose-50 transition flex items-center gap-1.5">
+                <i class="fa-regular fa-trash-can"></i> Limpar comprados
+            </button>
+        </section>
+
+        <!-- Main Shopping List -->
+        <main class="flex-1 p-4 overflow-y-auto custom-scrollbar bg-slate-50/30">
+            <ul id="shopping-list" class="space-y-2.5">
+                <!-- Data loaded dynamically -->
+            </ul>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden flex-col items-center justify-center py-16 text-center text-slate-400">
+                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-3 text-indigo-400 shadow-inner">
+                    <i class="fa-solid fa-basket-shopping text-2xl"></i>
+                </div>
+                <p class="text-sm font-semibold text-slate-600">A lista está vazia</p>
+                <p class="text-xs text-slate-400 mt-1">Adiciona o primeiro artigo em cima</p>
+            </div>
+        </main>
+        
+        <footer class="p-4 bg-white border-t border-slate-100 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Sincronizado em tempo real • Helder e Diana</span>
         </footer>
     </div>
 
-    <!-- Script Application Logic -->
+    <!-- Application Script Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -101,4 +114,165 @@
         const firebaseConfig = {
             apiKey: "AIzaSyDemoConfigKeyForShoppingList2026",
             authDomain: "demo-app.firebaseapp.com",
-            projectId: "demo-app-shopping
+            projectId: "demo-app-shopping-list",
+            storageBucket: "demo-app.appspot.com",
+            messagingSenderId: "1234567890",
+            appId: "1:1234567890:web:abcdef123456"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let items = [];
+        let currentFilter = 'all';
+
+        const LOCAL_STORAGE_KEY = 'helder_diana_items_vibrant';
+
+        function loadLocalData() {
+            const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (stored) {
+                try { items = JSON.parse(stored); } catch(e) { items = []; }
+            } else {
+                items = [
+                    { id: '1', name: 'Leite meio-gordo', qty: '2L', completed: false },
+                    { id: '2', name: 'Café em grão', qty: '1 emb', completed: true }
+                ];
+                saveLocalData();
+            }
+            renderList();
+        }
+
+        function saveLocalData() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
+        }
+
+        window.setFilter = function(filter) {
+            currentFilter = filter;
+            ['all', 'pending', 'completed'].forEach(f => {
+                const btn = document.getElementById(`filter-${f}`);
+                if (f === filter) {
+                    btn.className = "px-3 py-1.5 rounded-lg font-semibold transition text-indigo-700 bg-white shadow-xs";
+                } else {
+                    btn.className = "px-3 py-1.5 rounded-lg font-medium text-slate-500 hover:text-slate-800 transition";
+                }
+            });
+            renderList();
+        };
+
+        function renderList() {
+            const listEl = document.getElementById('shopping-list');
+            const emptyEl = document.getElementById('empty-state');
+            listEl.innerHTML = '';
+
+            const filtered = items.filter(item => {
+                if (currentFilter === 'pending') return !item.completed;
+                if (currentFilter === 'completed') return item.completed;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                emptyEl.classList.remove('hidden');
+                emptyEl.classList.add('flex');
+            } else {
+                emptyEl.classList.add('hidden');
+                emptyEl.classList.remove('flex');
+
+                filtered.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = `flex items-center justify-between p-3.5 bg-white border rounded-2xl transition duration-200 ${
+                        item.completed ? 'bg-slate-50/80 border-slate-200/60 opacity-75' : 'border-slate-200/80 shadow-xs hover:border-indigo-200 hover:shadow-md'
+                    }`;
+
+                    li.innerHTML = `
+                        <div class="flex items-center space-x-3.5 flex-1 min-w-0 pr-2">
+                            <button onclick="toggleItem('${item.id}')" class="flex-shrink-0 w-6 h-6 rounded-xl border transition flex items-center justify-center ${
+                                item.completed ? 'bg-emerald-500 border-emerald-500 text-white shadow-xs' : 'border-slate-300 hover:border-indigo-500 bg-white'
+                            }">
+                                ${item.completed ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                            </button>
+                            <span class="text-sm font-semibold truncate ${item.completed ? 'line-through text-slate-400 font-normal' : 'text-slate-700'}">
+                                ${escapeHtml(item.name)}
+                            </span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            ${item.qty ? `<span class="text-xs px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-lg font-semibold">${escapeHtml(item.qty)}</span>` : ''}
+                            <button onclick="deleteItem('${item.id}')" class="text-slate-300 hover:text-rose-500 transition p-1">
+                                <i class="fa-solid fa-xmark text-sm"></i>
+                            </button>
+                        </div>
+                    `;
+                    listEl.appendChild(li);
+                });
+            }
+
+            // Stats & Progress Updates
+            const total = items.length;
+            const completedCount = items.filter(i => i.completed).length;
+            const percentage = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+            
+            document.getElementById('progress-stats').innerText = `${completedCount} de ${total} itens comprados`;
+            document.getElementById('progress-percentage').innerText = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        document.getElementById('add-item-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('item-input');
+            const qtyInput = document.getElementById('qty-input');
+
+            const name = nameInput.value.trim();
+            const qty = qtyInput.value.trim();
+
+            if (!name) return;
+
+            const newItem = {
+                id: Date.now().toString(),
+                name: name,
+                qty: qty,
+                completed: false
+            };
+
+            items.unshift(newItem);
+            saveLocalData();
+            renderList();
+
+            nameInput.value = '';
+            qtyInput.value = '';
+            nameInput.focus();
+        });
+
+        window.toggleItem = function(id) {
+            const item = items.find(i => i.id === id);
+            if (item) {
+                item.completed = !item.completed;
+                saveLocalData();
+                renderList();
+            }
+        };
+
+        window.deleteItem = function(id) {
+            items = items.filter(i => i.id !== id);
+            saveLocalData();
+            renderList();
+        };
+
+        window.confirmClearCompleted = function() {
+            if (items.some(i => i.completed)) {
+                if (confirm('Tens a certeza que desejas remover todos os itens comprados?')) {
+                    items = items.filter(i => !i.completed);
+                    saveLocalData();
+                    renderList();
+                }
+            }
+        };
+
+        loadLocalData();
+    </script>
+</body>
+</html>
