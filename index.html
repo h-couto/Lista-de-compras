@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fontes Google Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .item-enter {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 antialiased pb-12">
+
+    <!-- Container Principal -->
+    <div class="max-w-3xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+        
+        <!-- Cabeçalho Principal -->
+        <header class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-6 transition-all">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-emerald-100 text-emerald-600 rounded-xl">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-slate-900 tracking-tight">Lista de compras de Helder e Diana</h1>
+                        <p class="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Sincronização em tempo real ativa
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de Progresso de Compras -->
+            <div class="mt-5 pt-4 border-t border-slate-100">
+                <div class="flex justify-between items-center text-xs text-slate-600 mb-1.5 font-medium">
+                    <span id="progress-text">0 de 0 itens comprados</span>
+                    <span id="progress-percent" class="font-bold text-emerald-600">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-300 w-0"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Formulário para Adicionar Item -->
+        <section class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 mb-6">
+            <h2 class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-500"></i>
+                Adicionar novo item
+            </h2>
+            <form id="add-item-form" onsubmit="handleAddItem(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                    <!-- Nome do Item -->
+                    <div class="sm:col-span-6">
+                        <input type="text" id="item-name" placeholder="Ex: Leite, Maçãs, Papel Higiénico..." required 
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+                    </div>
+                    <!-- Quantidade -->
+                    <div class="sm:col-span-3">
+                        <input type="text" id="item-qty" placeholder="Qtd. (ex: 1L, 500g, 2 un)" 
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+                    </div>
+                    <!-- Categoria -->
+                    <div class="sm:col-span-3">
+                        <select id="item-category" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all text-slate-700">
+                            <option value="Mercearia">🍞 Mercearia</option>
+                            <option value="Frescos">🍎 Frescos</option>
+                            <option value="Talho/Peixaria">🥩 Talho/Peixaria</option>
+                            <option value="Lacticínios">🧀 Lacticínios</option>
+                            <option value="Bebidas">🧃 Bebidas</option>
+                            <option value="Limpeza">🧹 Limpeza</option>
+                            <option value="Higiene">🧴 Higiene</option>
+                            <option value="Outros">📦 Outros</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Adicionar à Lista
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Filtros e Controlo da Lista -->
+        <section class="mb-4 space-y-3">
+            <div class="flex flex-col sm:flex-row gap-3 sm:items-center justify-between">
+                <!-- Filtros de Estado -->
+                <div class="flex bg-slate-200/60 p-1 rounded-xl text-xs font-semibold text-slate-600 self-start">
+                    <button onclick="setFilterStatus('all')" id="filter-all" class="px-3 py-1.5 rounded-lg transition-all">Todos</button>
+                    <button onclick="setFilterStatus('pending')" id="filter-pending" class="px-3 py-1.5 rounded-lg transition-all">Pendentes</button>
+                    <button onclick="setFilterStatus('completed')" id="filter-completed" class="px-3 py-1.5 rounded-lg transition-all">Comprados</button>
+                </div>
+
+                <!-- Filtro por Categoria -->
+                <div class="flex items-center gap-2">
+                    <select id="filter-category" onchange="renderItems()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="Mercearia">🍞 Mercearia</option>
+                        <option value="Frescos">🍎 Frescos</option>
+                        <option value="Talho/Peixaria">🥩 Talho/Peixaria</option>
+                        <option value="Lacticínios">🧀 Lacticínios</option>
+                        <option value="Bebidas">🧃 Bebidas</option>
+                        <option value="Limpeza">🧹 Limpeza</option>
+                        <option value="Higiene">🧴 Higiene</option>
+                        <option value="Outros">📦 Outros</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contentor de Itens da Lista -->
+        <main id="shopping-list-container" class="space-y-2 mb-6">
+            <!-- Os itens serão gerados via JavaScript -->
+        </main>
+
+        <!-- Ações Globais / Rodapé -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200 text-xs text-slate-500">
+            <span id="items-count-summary">0 itens na lista</span>
+            <div class="flex items-center gap-2">
+                <button onclick="clearCompleted()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg transition-all flex items-center gap-1.5 font-medium">
+                    <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                    Limpar Comprados
+                </button>
+                <button onclick="confirmResetAll()" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition-all flex items-center gap-1.5 font-medium">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    Reiniciar Tudo
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Customizado para Feedback / Confirmações -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-200">
+        <div id="modal-box" class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-xl border border-slate-100 transform scale-95 transition-transform duration-200">
+            <h3 id="modal-title" class="text-base font-bold text-slate-900 mb-2"></h3>
+            <p id="modal-message" class="text-sm text-slate-600 mb-5"></p>
+            <div id="modal-actions" class="flex justify-end gap-2"></div>
+        </div>
+    </div>
+
+    <!-- Script de Inicialização Firebase & Aplicação em Tempo Real -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Configuração e Conexão Firebase ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'helder-diana-compras';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : {
+                // Configuração predefinida para execução local / demonstração
+                apiKey: "AIzaSyDemoKeyOnlyForFallbackTesting",
+                authDomain: "demo-app.firebaseapp.com",
+                projectId: "demo-app",
+                storageBucket: "demo-app.appspot.com",
+                messagingSenderId: "000000000000",
+                appId: "1:000000000000:web:000000000000"
+            };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Estado Global
+        let currentFilterStatus = 'all';
+        let items = [];
+        let isAuthReady = false;
+
+        // Caminho da coleção partilhada (Regra 1: /artifacts/{appId}/public/data/{collectionName})
+        const itemsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'shopping_items');
+
+        // Ícones por Categoria
+        const categoryIcons = {
+            'Mercearia': '🍞',
+            'Frescos': '🍎',
+            'Talho/Peixaria': '🥩',
+            'Lacticínios': '🧀',
+            'Bebidas': '🧃',
+            'Limpeza': '🧹',
+            'Higiene': '🧴',
+            'Outros': '📦'
+        };
+
+        // --- Autenticação e Escuta de Dados em Tempo Real ---
+        async function initApp() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.warn("Aviso de Auth:", err.message);
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    isAuthReady = true;
+                    subscribeToRealtimeDatabase();
+                }
+            });
+        }
+
+        function subscribeToRealtimeDatabase() {
+            if (!isAuthReady) return;
+
+            // Escutador em tempo real (onSnapshot) sem queries complexas (Regra 2)
+            onSnapshot(itemsCollectionRef, (snapshot) => {
+                const fetchedItems = [];
+                snapshot.forEach((docSnap) => {
+                    fetchedItems.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                // Ordenar na memória do cliente por data de criação
+                fetchedItems.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                items = fetchedItems;
+                renderItems();
+            }, (error) => {
+                console.error("Erro na sincronização Firestore:", error);
+            });
+        }
+
+        // --- Operações de Dados no Firestore ---
+        window.handleAddItem = async function(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('item-name');
+            const qtyInput = document.getElementById('item-qty');
+            const catSelect = document.getElementById('item-category');
+
+            const name = nameInput.value.trim();
+            const quantity = qtyInput.value.trim();
+            const category = catSelect.value;
+
+            if (!name || !auth.currentUser) return;
+
+            const itemId = Date.now().toString();
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'shopping_items', itemId);
+
+            const newItem = {
+                name: name,
+                quantity: quantity || '1 un',
+                category: category,
+                completed: false,
+                createdAt: Date.now()
+            };
+
+            try {
+                await setDoc(docRef, newItem);
+                nameInput.value = '';
+                qtyInput.value = '';
+                nameInput.focus();
+            } catch (err) {
+                console.error("Erro ao adicionar item:", err);
+            }
+        };
+
+        window.toggleItem = async function(id) {
+            if (!auth.currentUser) return;
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'shopping_items', id);
+            try {
+                await setDoc(docRef, { ...item, completed: !item.completed }, { merge: true });
+            } catch (err) {
+                console.error("Erro ao atualizar estado:", err);
+            }
+        };
+
+        window.deleteItem = async function(id) {
+            if (!auth.currentUser) return;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'shopping_items', id);
+            try {
+                await deleteDoc(docRef);
+            } catch (err) {
+                console.error("Erro ao apagar item:", err);
+            }
+        };
+
+        window.clearCompleted = function() {
+            const completedItems = items.filter(i => i.completed);
+            if (completedItems.length === 0) {
+                showAlertModal("Sem itens para limpar", "Não existem itens marcados como comprados.");
+                return;
+            }
+
+            showConfirmModal("Limpar Comprados", `Tem a certeza que deseja remover ${completedItems.length} item(ns) comprado(s)?`, async () => {
+                for (const item of completedItems) {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'shopping_items', item.id);
+                    await deleteDoc(docRef);
+                }
+            });
+        };
+
+        window.confirmResetAll = function() {
+            showConfirmModal("Reiniciar Lista", "Isto irá apagar todos os itens da lista em tempo real para ambos. Esta ação não pode ser desfeita.", async () => {
+                for (const item of items) {
+                    const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'shopping_items', item.id);
+                    await deleteDoc(docRef);
+                }
+            });
+        };
+
+        // --- Interface & Renderização ---
+        window.setFilterStatus = function(status) {
+            currentFilterStatus = status;
+            ['all', 'pending', 'completed'].forEach(s => {
+                const btn = document.getElementById(`filter-${s}`);
+                if (btn) {
+                    btn.className = (s === status) 
+                        ? "px-3 py-1.5 rounded-lg bg-white text-slate-800 shadow-sm transition-all"
+                        : "px-3 py-1.5 rounded-lg hover:text-slate-900 transition-all";
+                }
+            });
+            renderItems();
+        };
+
+        window.renderItems = function() {
+            const container = document.getElementById('shopping-list-container');
+            const categoryFilter = document.getElementById('filter-category').value;
+
+            let filtered = items.filter(item => {
+                if (currentFilterStatus === 'pending' && item.completed) return false;
+                if (currentFilterStatus === 'completed' && !item.completed) return false;
+                if (categoryFilter !== 'all' && item.category !== categoryFilter) return false;
+                return true;
+            });
+
+            updateProgress();
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-100 shadow-sm">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center">
+                            <i data-lucide="inbox" class="w-6 h-6"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-700">Nenhum item encontrado</p>
+                        <p class="text-xs text-slate-400 mt-1">Qualquer item adicionado por si ou pela outra pessoa surgirá aqui instantaneamente.</p>
+                    </div>
+                `;
+                if (window.lucide) lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                const catIcon = categoryIcons[item.category] || '📦';
+
+                return `
+                    <div class="item-enter bg-white rounded-xl p-3.5 sm:p-4 border border-slate-100 shadow-sm hover:shadow transition-all flex items-center justify-between gap-3 ${item.completed ? 'bg-slate-50/70 border-slate-100' : ''}">
+                        <div class="flex items-center gap-3.5 flex-1 min-w-0">
+                            <button onclick="toggleItem('${item.id}')" aria-label="Marcar como comprado" class="flex-shrink-0 focus:outline-none group">
+                                <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${item.completed ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-300 group-hover:border-emerald-400 bg-white'}">
+                                    <i data-lucide="check" class="w-4 h-4 ${item.completed ? 'block' : 'hidden'}"></i>
+                                </div>
+                            </button>
+
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-sm font-semibold text-slate-800 ${item.completed ? 'line-through text-slate-400' : ''}">
+                                        ${escapeHtml(item.name)}
+                                    </span>
+                                    <span class="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md font-medium">
+                                        ${escapeHtml(item.quantity)}
+                                    </span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-1.5 text-xs text-slate-400">
+                                    <span class="flex items-center gap-1 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">
+                                        <span>${catIcon}</span>
+                                        <span>${item.category}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="deleteItem('${item.id}')" aria-label="Apagar item" class="text-slate-300 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition-all flex-shrink-0">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            if (window.lucide) lucide.createIcons();
+        };
+
+        function updateProgress() {
+            const total = items.length;
+            const completed = items.filter(i => i.completed).length;
+            const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+            document.getElementById('progress-text').textContent = `${completed} de ${total} itens comprados`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('items-count-summary').textContent = `${total} ${total === 1 ? 'item' : 'itens'} na lista`;
+        }
+
+        function escapeHtml(str) {
+            return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;") : '';
+        }
+
+        function openModal(title, message, actionsHtml) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').innerHTML = message;
+            document.getElementById('modal-actions').innerHTML = actionsHtml;
+
+            const backdrop = document.getElementById('modal-backdrop');
+            const box = document.getElementById('modal-box');
+            backdrop.classList.remove('hidden');
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
+        }
+
+        window.closeModal = function() {
+            const backdrop = document.getElementById('modal-backdrop');
+            const box = document.getElementById('modal-box');
+            backdrop.classList.add('opacity-0');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            setTimeout(() => backdrop.classList.add('hidden'), 200);
+        };
+
+        function showAlertModal(title, message) {
+            const actions = `
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-all">
+                    Entendido
+                </button>
+            `;
+            openModal(title, message, actions);
+        }
+
+        function showConfirmModal(title, message, onConfirm) {
+            window._modalConfirmAction = () => {
+                onConfirm();
+                closeModal();
+            };
+            const actions = `
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-xl transition-all">
+                    Cancelar
+                </button>
+                <button onclick="window._modalConfirmAction()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-xl transition-all">
+                    Confirmar
+                </button>
+            `;
+            openModal(title, message, actions);
+        }
+
+        // Iniciar app quando a página carregar
+        initApp();
+    </script>
+</body>
+</html>
