@@ -2,12 +2,25 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Lista de compras de Helder e Diana</title>
     
-    <!-- Tailwind CSS CDN -->
+    <!-- PWA & Mobile Fullscreen Capabilities -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Compras H&D">
+    <meta name="theme-color" content="#4f46e5">
+
+    <!-- Web App Manifest (Data URI para permitir instalação direta sem ficheiros extra) -->
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Lista%20de%20compras%20de%20Helder%20e%20Diana%22%2C%22short_name%22%3A%22Compras%20H%26D%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%234f46e5%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%253E%253Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%25234f46e5%27%2F%253E%253Cpath%20fill%3D%27none%27%20stroke%3D%27%2523ffffff%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%2732%27%20d%3D%27M160%20288h249.44a8%208%200%20007.85-6.43l28.8-144a8%208%200%2000-7.85-9.57H128%27%2F%253E%253Ccircle%20cx%3D%27176%27%20cy%3D%27416%27%20r%3D%2732%27%20fill%3D%27%2523ffffff%27%2F%253E%253Ccircle%20cx%3D%27400%27%20cy%3D%27416%27%20r%3D%2732%27%20fill%3D%27%2523ffffff%27%2F%253E%253Cpath%20fill%3D%27none%27%20stroke%3D%27%2523ffffff%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%2732%27%20d%3D%27M48%2080h64l48%20272h256%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+
+    <!-- Favicon & Apple Touch Icon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%234f46e5'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%234f46e5'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
+    
+    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -21,8 +34,8 @@
         <!-- Header -->
         <header class="bg-indigo-600 text-white p-5 shadow-md">
             <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center font-bold text-lg">
-                    H&D
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center font-bold text-lg border border-white/20 shadow-inner">
+                    <i class="fa-solid fa-basket-shopping text-xl"></i>
                 </div>
                 <div>
                     <span class="text-xs uppercase tracking-wider text-indigo-200 font-semibold block">Lista Partilhada</span>
@@ -41,17 +54,17 @@
             </div>
         </header>
 
-        <!-- Formulário -->
+        <!-- Formulário Corrigido (Botão + alinhado à altura dos inputs) -->
         <div class="p-4 bg-slate-50 border-b border-slate-200">
-            <div class="flex gap-2">
+            <div class="flex gap-2 items-stretch">
                 <input type="text" id="item-input" placeholder="O que falta comprar..." 
-                    class="flex-1 px-4 py-3 text-base bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    class="flex-1 min-w-0 px-4 py-3 text-base bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs">
                 
                 <input type="text" id="qty-input" placeholder="Qtd." 
-                    class="w-20 px-3 py-3 text-base bg-white border border-slate-300 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    class="w-20 px-3 py-3 text-base bg-white border border-slate-300 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-xs">
                 
                 <button type="button" id="add-btn" 
-                    class="w-12 h-12 bg-indigo-600 active:bg-indigo-700 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md">
+                    class="px-4 bg-indigo-600 active:bg-indigo-700 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md cursor-pointer shrink-0">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
@@ -92,7 +105,6 @@
         let items = JSON.parse(localStorage.getItem('hd_shopping_list') || '[]');
         let currentFilter = 'all';
 
-        // Se a lista estiver vazia inicialmente, meter um exemplo
         if (items.length === 0) {
             items = [
                 { id: '1', name: 'Leite', qty: '2L', completed: false },
@@ -103,10 +115,8 @@
             render();
         }
 
-        // Adicionar por clique no botão
         document.getElementById('add-btn').addEventListener('click', addItem);
 
-        // Adicionar por tecla Enter no input
         document.getElementById('item-input').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') addItem();
         });
@@ -223,7 +233,6 @@
                 });
             }
 
-            // Atualizar progresso
             const total = items.length;
             const done = items.filter(i => i.completed).length;
             const percent = total > 0 ? Math.round((done / total) * 100) : 0;
