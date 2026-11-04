@@ -12,12 +12,12 @@
     <meta name="apple-mobile-web-app-title" content="Compras H&D">
     <meta name="theme-color" content="#4f46e5">
 
-    <!-- Web App Manifest (Data URI para permitir instalação direta sem ficheiros extra) -->
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Lista%20de%20compras%20de%20Helder%20e%20Diana%22%2C%22short_name%22%3A%22Compras%20H%26D%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%234f46e5%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%253E%253Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27128%27%20fill%3D%27%25234f46e5%27%2F%253E%253Cpath%20fill%3D%27none%27%20stroke%3D%27%2523ffffff%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%2732%27%20d%3D%27M160%20288h249.44a8%208%200%20007.85-6.43l28.8-144a8%208%200%2000-7.85-9.57H128%27%2F%253E%253Ccircle%20cx%3D%27176%27%20cy%3D%27416%27%20r%3D%2732%27%20fill%3D%27%2523ffffff%27%2F%253E%253Ccircle%20cx%3D%27400%27%20cy%3D%27416%27%20r%3D%2732%27%20fill%3D%27%2523ffffff%27%2F%253E%253Cpath%20fill%3D%27none%27%20stroke%3D%27%2523ffffff%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20stroke-width%3D%2732%27%20d%3D%27M48%2080h64l48%20272h256%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+    <!-- Web App Manifest com Ícone PNG Dinâmico -->
+    <link rel="manifest" id="manifest-placeholder">
 
     <!-- Favicon & Apple Touch Icon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%234f46e5'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%234f46e5'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128'/%3E%3Ccircle cx='176' cy='416' r='32' fill='%23ffffff'/%3E%3Ccircle cx='400' cy='416' r='32' fill='%23ffffff'/%3E%3Cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='32' d='M48 80h64l48 272h256'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" id="favicon-dynamic">
+    <link rel="apple-touch-icon" id="apple-icon-dynamic">
     
     <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -54,7 +54,7 @@
             </div>
         </header>
 
-        <!-- Formulário Corrigido (Botão + alinhado à altura dos inputs) -->
+        <!-- Formulário -->
         <div class="p-4 bg-slate-50 border-b border-slate-200">
             <div class="flex gap-2 items-stretch">
                 <input type="text" id="item-input" placeholder="O que falta comprar..." 
@@ -100,8 +100,80 @@
         </footer>
     </div>
 
-    <!-- Script de Execução Direta -->
+    <!-- Script Principal -->
     <script>
+        // Gerar Ícone PNG de Alta Resolução via Canvas
+        (function generateAppIcons() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            const r = 110;
+            ctx.fillStyle = '#4f46e5';
+            ctx.beginPath();
+            ctx.moveTo(r, 0);
+            ctx.lineTo(512 - r, 0);
+            ctx.quadraticCurveTo(512, 0, 512, r);
+            ctx.lineTo(512, 512 - r);
+            ctx.quadraticCurveTo(512, 512, 512 - r, 512);
+            ctx.lineTo(r, 512);
+            ctx.quadraticCurveTo(0, 512, 0, 512 - r);
+            ctx.lineTo(0, r);
+            ctx.quadraticCurveTo(0, 0, r, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.fillStyle = '#ffffff';
+            ctx.lineWidth = 28;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            ctx.beginPath();
+            ctx.moveTo(80, 120);
+            ctx.lineTo(150, 120);
+            ctx.lineTo(195, 360);
+            ctx.lineTo(420, 360);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(170, 200);
+            ctx.lineTo(440, 200);
+            ctx.lineTo(410, 310);
+            ctx.lineTo(187, 310);
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(220, 420, 26, 0, Math.PI * 2);
+            ctx.arc(395, 420, 26, 0, Math.PI * 2);
+            ctx.fill();
+
+            const iconDataUrl = canvas.toDataURL('image/png');
+
+            document.getElementById('favicon-dynamic').href = iconDataUrl;
+            document.getElementById('apple-icon-dynamic').href = iconDataUrl;
+
+            const manifestObj = {
+                "name": "Lista de compras de Helder e Diana",
+                "short_name": "Compras H&D",
+                "start_url": "./",
+                "display": "standalone",
+                "background_color": "#ffffff",
+                "theme_color": "#4f46e5",
+                "icons": [{
+                    "src": iconDataUrl,
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/json' });
+            document.getElementById('manifest-placeholder').href = URL.createObjectURL(manifestBlob);
+        })();
+
+        // Lógica da Lista
         let items = JSON.parse(localStorage.getItem('hd_shopping_list') || '[]');
         let currentFilter = 'all';
 
@@ -148,7 +220,10 @@
 
             nameInput.value = '';
             qtyInput.value = '';
-            nameInput.focus();
+
+            // Recolher o teclado virtual do telemóvel
+            nameInput.blur();
+            qtyInput.blur();
         }
 
         function toggleItem(id) {
