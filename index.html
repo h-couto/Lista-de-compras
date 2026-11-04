@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-title" content="Compras H&D">
     <meta name="theme-color" content="#4f46e5">
 
-    <!-- Web App Manifest com Ícone PNG Dinâmico -->
+    <!-- Web App Manifest com Ícone PNG Dinâmico Proporcional -->
     <link rel="manifest" id="manifest-placeholder">
 
     <!-- Favicon & Apple Touch Icon -->
@@ -102,13 +102,14 @@
 
     <!-- Script Principal -->
     <script>
-        // Gerar Ícone PNG de Alta Resolução via Canvas
+        // Gerar Ícone PNG Proporcional via Canvas
         (function generateAppIcons() {
             const canvas = document.createElement('canvas');
             canvas.width = 512;
             canvas.height = 512;
             const ctx = canvas.getContext('2d');
 
+            // Fundo Indigo com cantos arredondados (estilo app moderna)
             const r = 110;
             ctx.fillStyle = '#4f46e5';
             ctx.beginPath();
@@ -124,30 +125,34 @@
             ctx.closePath();
             ctx.fill();
 
+            // Desenhar Carrinho de Compras perfeitamente centrado e proporcional
             ctx.strokeStyle = '#ffffff';
             ctx.fillStyle = '#ffffff';
-            ctx.lineWidth = 28;
+            ctx.lineWidth = 26;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
 
+            // Puxador e estrutura principal
             ctx.beginPath();
-            ctx.moveTo(80, 120);
-            ctx.lineTo(150, 120);
-            ctx.lineTo(195, 360);
-            ctx.lineTo(420, 360);
+            ctx.moveTo(110, 150);
+            ctx.lineTo(170, 150);
+            ctx.lineTo(210, 330);
+            ctx.lineTo(390, 330);
             ctx.stroke();
 
+            // Cesto do carrinho
             ctx.beginPath();
-            ctx.moveTo(170, 200);
-            ctx.lineTo(440, 200);
-            ctx.lineTo(410, 310);
-            ctx.lineTo(187, 310);
+            ctx.moveTo(190, 210);
+            ctx.lineTo(410, 210);
+            ctx.lineTo(380, 295);
+            ctx.lineTo(210, 295);
             ctx.closePath();
             ctx.stroke();
 
+            // Rodas proporcionais
             ctx.beginPath();
-            ctx.arc(220, 420, 26, 0, Math.PI * 2);
-            ctx.arc(395, 420, 26, 0, Math.PI * 2);
+            ctx.arc(240, 385, 22, 0, Math.PI * 2);
+            ctx.arc(360, 385, 22, 0, Math.PI * 2);
             ctx.fill();
 
             const iconDataUrl = canvas.toDataURL('image/png');
@@ -173,19 +178,19 @@
             document.getElementById('manifest-placeholder').href = URL.createObjectURL(manifestBlob);
         })();
 
-        // Lógica da Lista
-        let items = JSON.parse(localStorage.getItem('hd_shopping_list') || '[]');
-        let currentFilter = 'all';
-
-        if (items.length === 0) {
-            items = [
-                { id: '1', name: 'Leite', qty: '2L', completed: false },
-                { id: '2', name: 'Pão', qty: '1 un', completed: true }
-            ];
-            saveAndRender();
-        } else {
-            render();
+        // Lógica da Lista de Compras
+        let items = [];
+        try {
+            const stored = localStorage.getItem('hd_shopping_list');
+            if (stored) {
+                items = JSON.parse(stored);
+            }
+        } catch (e) {
+            items = [];
         }
+
+        let currentFilter = 'all';
+        render();
 
         document.getElementById('add-btn').addEventListener('click', addItem);
 
@@ -240,9 +245,11 @@
         }
 
         function clearCompleted() {
-            if (confirm('Tens a certeza que queres remover os itens concluídos?')) {
-                items = items.filter(i => !i.completed);
-                saveAndRender();
+            if (items.some(i => i.completed)) {
+                if (confirm('Tens a certeza que queres remover os itens concluídos?')) {
+                    items = items.filter(i => !i.completed);
+                    saveAndRender();
+                }
             }
         }
 
